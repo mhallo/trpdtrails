@@ -10,7 +10,7 @@ page = requests.get(URL)
 park_list = []
 
 # Stores the content for the updates
-status_info = []
+status_info_list = []
 
 #Stores the update times
 time_list = []
@@ -55,15 +55,10 @@ def extract_trail_conditions(trail_paragraph):
         for i in range(19, len(content_list)):
             if content_list[i].name == "p":
                 tag_stripped_strings = list(content_list[i].stripped_strings)
-                # list_length = len(tag_stripped_strings)
-                # content_len = list_length - 2
-                # Content printer:
-                # Need a way to clean this up, but put all of the content into one big string and then ship it out for the dictionary.
-                content_string = " ".join(tag_stripped_strings)
-                status_info.append(content_string)
-                print(content_string)
-                # for string in range(0, content_len):
-                #     print(f"Content: {tag_stripped_strings[string]}")
+                # the last two elements are the update times, so we slice out the content we want as a shallow copy
+                trail_content_list = tag_stripped_strings[:len(tag_stripped_strings)-2 or None]
+                content_string = " ".join(trail_content_list)
+                status_info_list.append(content_string)
 
 # extracts the time at which the trail conditions were updated
 def extract_update_times(trail_paragraph):
@@ -79,23 +74,6 @@ def extract_update_times(trail_paragraph):
                 update_index = list_length - 1
                 # Update Time printer:
                 time_list.append(tag_stripped_strings[update_index])
-                print(f"Updated at: {tag_stripped_strings[update_index]}")
-
-
-def extract_dirty(trail_paragraph):
-    content_list = list(trail_paragraph.children)
-    if len(content_list) != 0:
-        print('extracting dirty contents...')
-        # We start at the 19th position for the list of the trail paragraph as there is a blurb on the webpage that does not contain relevant content.
-        # In the future, it would be better to dynamically find this in the event that the website maintainers end up manually changing the contents, therefore ruining how this works
-        for i in range(19, len(content_list)):
-            if content_list[i].name == "p":
-                tag_stripped_strings = list(content_list[i].stripped_strings)
-                list_length = len(tag_stripped_strings)
-                content_len = list_length - 2
-                # Content printer:
-                for string in range(0, content_len):
-                    print(f"Content:{string} {tag_stripped_strings[string]}")
 
 # takes a string input, will check if any of the condtions are found within the condition table
 def populate_conditions(content_string):
@@ -122,3 +100,9 @@ extract_update_times(trail_paragraph)
 populate_park_list(trail_paragraph)
 for park in park_list:
     print(park)
+
+for status in status_info_list:
+    print(status)
+
+for update_time in time_list:
+    print(update_time)

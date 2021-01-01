@@ -79,3 +79,18 @@
 #         # print('NOW PRINTING WHEN STUFF WAS UPDATED')
 #         update_time = string_list[update_index]
 #         print("My result? " + update_time)
+
+def extract_dirty(trail_paragraph):
+    content_list = list(trail_paragraph.children)
+    if len(content_list) != 0:
+        print('extracting dirty contents...')
+        # We start at the 19th position for the list of the trail paragraph as there is a blurb on the webpage that does not contain relevant content.
+        # In the future, it would be better to dynamically find this in the event that the website maintainers end up manually changing the contents, therefore ruining how this works
+        for i in range(19, len(content_list)):
+            if content_list[i].name == "p":
+                tag_stripped_strings = list(content_list[i].stripped_strings)
+                list_length = len(tag_stripped_strings)
+                content_len = list_length - 2
+                # Content printer:
+                for string in range(0, content_len):
+                    print(f"Content:{string} {tag_stripped_strings[string]}")
