@@ -13,7 +13,7 @@ park_list = []
 status_info = []
 
 #Stores the update times
-times = []
+time_list = []
 
 # aggregates all of the park info into a dictionary, to be converted to JSON
 status_dict = {}
@@ -78,7 +78,7 @@ def extract_update_times(trail_paragraph):
                 list_length = len(tag_stripped_strings)
                 update_index = list_length - 1
                 # Update Time printer:
-                times.append(tag_stripped_strings[update_index])
+                time_list.append(tag_stripped_strings[update_index])
                 print(f"Updated at: {tag_stripped_strings[update_index]}")
 
 
