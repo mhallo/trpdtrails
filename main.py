@@ -21,6 +21,24 @@ def populate_park_list(threerivers_content):
     for tag in h3s:
         parks.append(cleanhtml(str(tag.contents[0])))
 
+def trail_status_extractor(trail_paragraph):
+    content_list = list(trail_paragraph.children)
+    if len(content_list) != 0:
+        print('extracting page contents...')
+        # We start at the 19th position for the list of the trail paragraph as there is a blurb on the webpage that does not contain relevant content.
+        # In the future, it would be better to dynamically find this in the event that the website maintainers end up manually changing the contents, therefore ruining how this works
+        for i in range(19, len(content_list)):
+            if content_list[i].name == "p":
+                # print(f"{i}: {content_list[i]}")
+                tag_stripped_strings = list(content_list[i].stripped_strings)
+                list_length = len(tag_stripped_strings)
+                content_len = list_length - 2
+                update_index = list_length - 1
+                # Content printer:
+                for string in range(0, content_len):
+                    print(f"Content: {tag_stripped_strings[string]}")
+                # Update Time printer:
+                print(f"Updated at: {tag_stripped_strings[update_index]}")
 
 soup = BeautifulSoup(page.content, 'html.parser')
 subsection = soup.find(id='block-threerivers-content')
@@ -30,40 +48,9 @@ traildiv =  soup.find("div", {"class": "userContent"})
 
 # gets us out of the trail div and into the main content
 drilldown = soup.find('p')
-drilldown_list = list(drilldown)
-dll = len(drilldown_list)
-# for i in range(0, len(drilldown_list)):
-#     print(f"{i}: {drilldown_list[i]}: {type(drilldown_list[i])}")
-# The bit we care about starts at the 15th bs4 element, and we'll be naive and this will likely have a potential to break in the future.
-test = len(list(drilldown.children))
-print(f"number of items in drilldown just as plain ol list {dll}")
-print(f"number of items in children {test}")
-for uhh in drilldown.children:
-    # each paragraph can be a list of contents
-    if uhh.name == "p":
-        # tell beautiful soup to get the non-html filled tags of the page
-        # for string in uhh.stripped_strings:
-        #     print(string)
-        # print('=====')
-        string_list = list(uhh.stripped_strings)
-        if 'Updated' in string_list:
-            print('yup buddy')
-        # for string in string_list:
-        #     print(string)
-        # print('xxxxx')
-        # length of the stripped string list, aka the information which tells us the contidion of each trails, and also any other notes TRPD provides
-        list_length = len(string_list)
-        # The update time information is the last two items in the stripped string list, all the rest is the content we want!
-        content_len = list_length - 2
-        update_index = list_length - 1
-        # print('NOW PRINTING UPDATE CONTENTS')
-        # for string in range(0, content_len):
-        #     print(string_list[string])
-        # print()
-        # print('NOW PRINTING WHEN STUFF WAS UPDATED')
-        update_time = string_list[update_index]
-        print("My result? " + update_time)
 
-# populate_park_list(drilldown)
-# for park in parks:
-#     print(park)
+trail_status_extractor(drilldown)
+
+populate_park_list(drilldown)
+for park in parks:
+    print(park)
