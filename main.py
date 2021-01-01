@@ -82,7 +82,11 @@ def populate_conditions(content_string):
         print(f"condition found: {string}")
 
 def populate_JSON():
-    print('constructing JSON...')
+    length = len(park_list)
+    if all(len(lst) == length for lst in [status_info_list, time_list]):
+        print('start to create the JSON object.')
+    else:
+        print('Unable to update the dictionary.  Was there a problem with the inital request?')
 
 soup = BeautifulSoup(page.content, 'html.parser')
 subsection = soup.find(id='block-threerivers-content')
@@ -98,11 +102,14 @@ extract_trail_conditions(trail_paragraph)
 extract_update_times(trail_paragraph)
 
 populate_park_list(trail_paragraph)
-for park in park_list:
-    print(park)
 
-for status in status_info_list:
-    print(status)
+populate_JSON()
 
-for update_time in time_list:
-    print(update_time)
+# for park in park_list:
+#     print(park)
+
+# for status in status_info_list:
+#     print(status)
+
+# for update_time in time_list:
+#     print(update_time)
