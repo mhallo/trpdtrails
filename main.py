@@ -59,7 +59,6 @@ def populate_park_list(threerivers_content):
     h3s = threerivers_content.find_all('h3')
     for tag in h3s:
         park_list.append(cleanhtml(str(tag.contents[0])))
-        print(park_list)
     return park_list
 
 # extracts the trail condition content from the trail paragraph
