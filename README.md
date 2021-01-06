@@ -4,6 +4,19 @@ The intent of this module/project is to provide an easier interface to check the
 
 As the website (from what I can tell) is just a Drupal webpage that is manually updated, the way to make it more readily accesible is to fetch and parse the page.
 
+# Disclaimer
+I do not work with the Three Rivers Park District of Minnesota.
+The Three Rivers Park District does not maintain this project.
+Support for this module will only last as long as I am willing and/or able to support it.
+
+## Unit Tests
+
+Unit Tests can be ran with:
+
+```
+python3 -m unittest
+```
+
 ## First Tasks
 For the time being, the primary focus is to determine the way in which we can extract all of the park and trail information.
 Then store the results in a organized and easily fetchable manner
