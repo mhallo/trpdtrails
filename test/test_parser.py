@@ -26,7 +26,8 @@ class trpdtests(unittest.TestCase):
          'French Regional Park', 'Glen Lake Golf Center', 
          'Hyland Lake Park Reserve', 'Lake Rebecca Park Reserve', 'Murphy-Hanrehan Park Reserve']
 
-        result = main.populate_park_list(self.page)
+        main.populate_park_list(self.page)
+        result = main.get_park_list()
         self.assertListEqual(expected_park_list, result)
 
 if __name__ == '__main__':

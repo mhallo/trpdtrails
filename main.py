@@ -59,7 +59,6 @@ def populate_park_list(threerivers_content):
     h3s = threerivers_content.find_all('h3')
     for tag in h3s:
         park_list.append(cleanhtml(str(tag.contents[0])))
-    return park_list
 
 # extracts the trail condition content from the trail paragraph
 # note: I decided to separate the content and time content from a shared method to allow for more specialized parsing for data storage in the future
@@ -97,6 +96,15 @@ def populate_conditions(content_string):
     string = content_string.lower()
     if any(x in string for x in condition_list):
         print(f"condition found: {string}")
+
+def get_park_list():
+    return park_list
+
+def get_status_list():
+    return status_info_list
+
+def get_time_list():
+    return time_list
 
 def populate_JSON():
     length = len(park_list)
