@@ -37,12 +37,30 @@ def cleanhtml(raw_html):
     cleantext = re.sub(cleanr, '', raw_html)
     return cleantext
 
+def parse_page():
+    URL = 'https://www.threeriversparks.org/page/trail-conditions-cross-country-skiing'
+    page = requests.get(URL)
+
+    soup = BeautifulSoup(page.content, 'html.parser')
+    
+    # find the main block content
+    soup.find(id='block-threerivers-content')
+    
+    # traildiv gets the specific block of html which houses the terminology definitions, as well as all of the trails.
+    soup.find("div", {"class": "userContent"})
+
+    # gets us out of the trail div and into the main content
+    trail_paragraph = soup.find('p')
+    return trail_paragraph
+    
 # self explanitory, populates the list of all of the parks.  Takes in a BeautifulSoup4 object that has it's scope to the 'three rivers park district content'
 def populate_park_list(threerivers_content):
     print('populating park list...')
     h3s = threerivers_content.find_all('h3')
     for tag in h3s:
         park_list.append(cleanhtml(str(tag.contents[0])))
+        print(park_list)
+    return park_list
 
 # extracts the trail condition content from the trail paragraph
 # note: I decided to separate the content and time content from a shared method to allow for more specialized parsing for data storage in the future
@@ -88,22 +106,23 @@ def populate_JSON():
     else:
         print('Unable to update the dictionary.  Was there a problem with the inital request?')
 
-soup = BeautifulSoup(page.content, 'html.parser')
-subsection = soup.find(id='block-threerivers-content')
+# soup = BeautifulSoup(page.content, 'html.parser')
+# subsection = soup.find(id='block-threerivers-content')
 
-# traildiv gets the specific block of html which houses the terminology definitions, as well as all of the trails.
-traildiv =  soup.find("div", {"class": "userContent"})
+# # traildiv gets the specific block of html which houses the terminology definitions, as well as all of the trails.
+# traildiv =  soup.find("div", {"class": "userContent"})
 
-# gets us out of the trail div and into the main content
-trail_paragraph = soup.find('p')
+# # gets us out of the trail div and into the main content
+# trail_paragraph = soup.find('p')
+# trail_paragraph = parse_page()
 
-extract_trail_conditions(trail_paragraph)
+# extract_trail_conditions(trail_paragraph)
 
-extract_update_times(trail_paragraph)
+# extract_update_times(trail_paragraph)
 
-populate_park_list(trail_paragraph)
+# populate_park_list(trail_paragraph)
 
-populate_JSON()
+# populate_JSON()
 
 # for park in park_list:
 #     print(park)
