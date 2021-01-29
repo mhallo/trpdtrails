@@ -17,7 +17,7 @@ Unit Tests can be ran with:
 python3 -m unittest
 ```
 
-## First Tasks
+## Current Tasks
 For the time being, the primary focus is to determine the way in which we can extract all of the park and trail information.
 Then store the results in a organized and easily fetchable manner
 
