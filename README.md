@@ -9,6 +9,23 @@ I do not work with the Three Rivers Park District of Minnesota.
 The Three Rivers Park District does not maintain this project.
 Support for this module will only last as long as I am willing and/or able to support it.
 
+## Running the Server
+```
+export FLASK_APP=trpdtrails
+```
+
+Then in order to install and run the server you need to run:
+```
+pip install -e .
+flask run
+```
+
+Additionally, development features can be seen with:
+```
+export FLASK_ENV=development
+```
+
+
 ## Unit Tests
 
 Unit Tests can be ran with:
